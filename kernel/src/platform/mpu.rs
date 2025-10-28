@@ -322,6 +322,11 @@ impl MPU for () {
             None
         } else {
             Some((unallocated_memory_start, memory_size))
+            // start of process memory, ^ process memory size including grant, 
+
+            // missing size of actual process
+
+            // another const u* or usize
         }
     }
 

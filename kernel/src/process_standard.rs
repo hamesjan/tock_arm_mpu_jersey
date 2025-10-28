@@ -424,6 +424,8 @@ pub struct ProcessStandard<'a, C: 'static + Chip, D: 'static + ProcessStandardDe
     kernel_memory_break: Cell<*const u8>,
 
     /// Pointer to the end of process RAM that has been sbrk'd to the process.
+
+    // liess
     app_break: Cell<*const u8>,
 
     /// Pointer to high water mark for process buffers shared through `allow`
@@ -2245,6 +2247,10 @@ impl<C: 'static + Chip, D: 'static + ProcessStandardDebug> ProcessStandard<'_, C
             } else if new_break > self.kernel_memory_break.get() {
                 None
                 // Verify this is compatible with the MPU.
+
+                // grow kernel grant region, but app_break is fake.
+
+                // mismatch, 
             } else if let Err(()) = self.chip.mpu().update_app_memory_region(
                 self.app_break.get(),
                 new_break,

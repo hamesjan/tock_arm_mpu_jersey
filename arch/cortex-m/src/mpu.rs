@@ -7,6 +7,8 @@
 //! Implementation of the memory protection unit for the Cortex-M0+, Cortex-M3,
 //! Cortex-M4, and Cortex-M7.
 
+// here
+
 use core::cell::Cell;
 use core::cmp;
 use core::fmt;
@@ -130,6 +132,9 @@ register_bitfields![u32,
         ENABLE OFFSET(0) NUMBITS(1) []
     ]
 ];
+
+const MPU_BASE_ADDRESS: StaticRef<MpuRegisters> =
+    unsafe { StaticRef::new(0xE000ED90 as *const MpuRegisters) };
 
 /// State related to the real physical MPU.
 ///
@@ -271,7 +276,7 @@ impl PartialEq<mpu::Region> for CortexMRegion {
 
 impl CortexMRegion {
     fn new(
-        logical_start: *const u8,
+        logical_start: *const u8, // why does each region have parameterized constructor if already known ?
         logical_size: usize,
         region_start: *const u8,
         region_size: usize,
